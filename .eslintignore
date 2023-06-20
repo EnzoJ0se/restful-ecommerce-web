@@ -1,0 +1,4 @@
+node_modules/
+e2e/
+src/app/resources/user/user.model.ts
+src/app/helpers/coloquent/coloquent-response-helper.ts

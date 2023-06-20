@@ -1,58 +1,98 @@
-<div class="w-full h-full flex justify-center items-center">
-    <div class="flex-col mt-6 py-4 border border-gray-300 w-7/12 px-4 rounded-lg shadow-xl" style="min-height: 70%;">
-        <div class="py-3 border-b border-gray-500 w-full flex justify-between">
-            <span class="text-2xl font-bold text-gray-700">Listagem de Produtos</span>
+<div class="w-full h-full flex justify-center items-center gap-3">
+    <div class="w-full h-full flex justify-center items-center gap-3">
+        <div class="flex-col mt-6 py-4 border border-gray-300 w-3/12 px-4 rounded-lg shadow-xl"
+            style="min-height: 70%;">
+            <div class="py-3 border-b border-gray-500 w-full flex justify-between">
+                <span class="text-2xl font-bold text-gray-700">Filtros</span>
+            </div>
 
-            <button class="px-4 h-8 rounded-xl bg-green-500 hover:bg-green-400 text-white"
-                routerLink="incluir">
-                Criar Produto
+            <div class="block mt-3">
+                <label class="mt-3" for="product_code">Código:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="product_code"
+                    name="product_code" type="text" required="true" [(ngModel)]="filters.code"
+                    (ngModelChange)="refreshTable()">
+            </div>
+
+            <div class="block">
+                <label class="mt-3" for="product_description">Descrição:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="product_description"
+                    name="product_description" type="text" required="true" [(ngModel)]="filters.description"
+                    (ngModelChange)="refreshTable()">
+            </div>
+
+            <div class="block">
+                <label class="mt-3" for="product_price">Preço:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="product_price"
+                    name="product_price" type="number" required="true" [(ngModel)]="filters.price"
+                    (ngModelChange)="refreshTable()">
+            </div>
+
+            <div class="block">
+                <label class="mt-3" for="product_stock_qtd">Quantidade em Estoque:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="product_stock_qtd"
+                    name="product_stock_qtd" type="number" required="true" [(ngModel)]="filters.stock_quantity"
+                    (ngModelChange)="refreshTable()">
+            </div>
+
+            <button class="mt-3 px-4 h-8 rounded-lg bg-red-500 hover:bg-green-400 text-white" (click)="clearFilters()">
+                Limpar Filtros
             </button>
         </div>
 
-        <table class="table w-full mt-6">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-2 py-4 uppercase rounded-l-xl">Código</th>
-                    <th class="px-2 py-4 uppercase">Descrição</th>
-                    <th class="px-2 py-4 uppercase">Preço</th>
-                    <th class="px-2 py-4 uppercase">QTD em Estoque</th>
-                    <th class="px-2 py-4 uppercase rounded-r-xl">Ações</th>
-                </tr>
-            </thead>
+        <div class="flex-col mt-6 py-4 border border-gray-300 w-7/12 px-4 rounded-lg shadow-xl"
+            style="min-height: 70%;">
+            <div class="py-3 border-b border-gray-500 w-full flex justify-between">
+                <span class="text-2xl font-bold text-gray-700">Listagem de Produtos</span>
 
-            <tbody>
-                <ng-container *ngIf="products?.length; else noData">
-                    <tr *ngFor="let product of products" class="border-b rounded-xl">
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ product.code }}</td>
+                <button class="px-4 h-8 rounded-xl bg-green-500 hover:bg-green-400 text-white" routerLink="incluir">
+                    Criar Produto
+                </button>
+            </div>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ product.description }}</td>
-
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ product.price }}</td>
-
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ product.stock_quantity }}</td>
-
-                        <td  class="p-2 text-center hover:bg-gray-100">
-                            <div class="w-full flex justify-center gap-3">
-                                <fa-icon [icon]="penIcon" class="cursor-pointer hover:text-gray-400"
-                                    [routerLink]="[product.id, 'editar']">
-                                </fa-icon>
-
-                                <fa-icon [icon]="trashIcon" class="cursor-pointer hover:text-red-500"
-                                    (click)="delete(product)">
-                                </fa-icon>
-                            </div>
-                        </td>
-                    </tr>
-                </ng-container>
-
-                <ng-template #noData>
+            <table class="table w-full mt-6">
+                <thead class="bg-gray-200">
                     <tr>
-                        <td class="p-2" colspan="6">
-                            <div class="w-full text-center">nenhum registro encontrado.</div>
-                        </td>
+                        <th class="px-2 py-4 uppercase rounded-l-xl">Código</th>
+                        <th class="px-2 py-4 uppercase">Descrição</th>
+                        <th class="px-2 py-4 uppercase">Preço</th>
+                        <th class="px-2 py-4 uppercase">QTD em Estoque</th>
+                        <th class="px-2 py-4 uppercase rounded-r-xl">Ações</th>
                     </tr>
-                </ng-template>
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    <ng-container *ngIf="products?.length; else noData">
+                        <tr *ngFor="let product of products" class="border-b rounded-xl">
+                            <td class="p-2 text-center hover:bg-gray-100">{{ product.code }}</td>
+
+                            <td class="p-2 text-center hover:bg-gray-100">{{ product.description }}</td>
+
+                            <td class="p-2 text-center hover:bg-gray-100">{{ product.price }}</td>
+
+                            <td class="p-2 text-center hover:bg-gray-100">{{ product.stock_quantity }}</td>
+
+                            <td class="p-2 text-center hover:bg-gray-100">
+                                <div class="w-full flex justify-center gap-3">
+                                    <fa-icon [icon]="penIcon" class="cursor-pointer hover:text-gray-400"
+                                        [routerLink]="[product.id, 'editar']">
+                                    </fa-icon>
+
+                                    <fa-icon [icon]="trashIcon" class="cursor-pointer hover:text-red-500"
+                                        (click)="delete(product)">
+                                    </fa-icon>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                    <ng-template #noData>
+                        <tr>
+                            <td class="p-2" colspan="6">
+                                <div class="w-full text-center">nenhum registro encontrado.</div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>

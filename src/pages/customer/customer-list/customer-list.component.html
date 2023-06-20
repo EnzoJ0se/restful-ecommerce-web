@@ -1,10 +1,52 @@
-<div class="w-full h-full flex justify-center items-center">
+<div class="w-full h-full flex justify-center items-center gap-3">
+    <div class="flex-col mt-6 py-4 border border-gray-300 w-3/12 px-4 rounded-lg shadow-xl" style="min-height: 70%;">
+        <div class="py-3 border-b border-gray-500 w-full flex justify-between">
+            <span class="text-2xl font-bold text-gray-700">Filtros</span>
+        </div>
+
+        <div class="block mt-3">
+            <label for="sales_select">Venda: <br></label>
+            <select class="block w-full h-12 border border-gray-600 bg-white rounded-lg px-2" name="sales_select"
+                [(ngModel)]="filters.sale_id" (ngModelChange)="refreshTable()">
+                <ng-container *ngFor="let sale of sales">
+                    <option class="h-8 px-2" [value]="sale.id">
+                        {{ sale.code }}
+                    </option>
+                </ng-container>
+            </select>
+        </div>
+
+        <div class="block mt-3">
+            <label for="customer_name">Nome: <br></label>
+            <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="customer_name"
+                name="customer_name" type="text" required="true" [(ngModel)]="filters.name"
+                (ngModelChange)="refreshTable()">
+        </div>
+
+        <div class="block">
+            <label class="mt-3" for="customer_cpf">CPF:<br></label>
+            <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="customer_cpf"
+                name="customer_cpf" type="text" required="true" [(ngModel)]="filters.cpf"
+                (ngModelChange)="refreshTable()">
+        </div>
+
+        <div class="block">
+            <label class="mt-3" for="customer_address">Endereço:<br></label>
+            <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="customer_address"
+                name="customer_address" type="tel" required="true" [(ngModel)]="filters.address"
+                (ngModelChange)="refreshTable()">
+        </div>
+
+        <button class="mt-3 px-4 h-8 rounded-lg bg-red-500 hover:bg-green-400 text-white" (click)="clearFilters()">
+            Limpar Filtros
+        </button>
+    </div>
+
     <div class="flex-col mt-6 py-4 border border-gray-300 w-7/12 px-4 rounded-lg shadow-xl" style="min-height: 70%;">
         <div class="py-3 border-b border-gray-500 w-full flex justify-between">
             <span class="text-2xl font-bold text-gray-700">Listagem de Clientes</span>
 
-            <button class="px-4 h-8 rounded-xl bg-green-500 hover:bg-green-400 text-white"
-                routerLink="incluir">
+            <button class="px-4 h-8 rounded-xl bg-green-500 hover:bg-green-400 text-white" routerLink="incluir">
                 Criar cliente
             </button>
         </div>
@@ -23,15 +65,15 @@
             <tbody>
                 <ng-container *ngIf="customers?.length; else noData">
                     <tr *ngFor="let customer of customers" class="border-b rounded-xl">
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ customer.name }}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ customer.name }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ customer.cpf }}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ customer.cpf }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ customer.phone }}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ customer.phone }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ customer.address }}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ customer.address }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">
+                        <td class="p-2 text-center hover:bg-gray-100">
                             <div class="w-full flex justify-center gap-3">
                                 <fa-icon [icon]="penIcon" class="cursor-pointer hover:text-gray-400"
                                     [routerLink]="[customer.id, 'editar']">

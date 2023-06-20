@@ -14,6 +14,13 @@ export class ProductListComponent implements OnInit {
     public penIcon = faPen;
     public trashIcon = faTrash;
 
+    public filters: any = {
+        code: null,
+        description: null,
+        price: null,
+        stock_quantity: null,
+    };
+
     public constructor(
         private productHttpService: ProductHttpService
     ) {}
@@ -28,8 +35,19 @@ export class ProductListComponent implements OnInit {
             .catch(() => alert('ocorreu um erro'));
     }
 
-    private refreshTable(): void {
-        this.productHttpService.get().then((response) => {
+    public clearFilters(): void {
+        this.filters = {
+            code: null,
+            description: null,
+            price: null,
+            stock_quantity: null,
+        };
+
+        this.refreshTable();
+    }
+
+    public refreshTable(): void {
+        this.productHttpService.get(this.filters).then((response) => {
             this.products = response?.data;
         });
     }

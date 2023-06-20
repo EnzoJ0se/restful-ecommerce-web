@@ -1,10 +1,64 @@
-<div class="w-full h-full flex justify-center items-center">
+<div class="w-full h-full flex justify-center items-center gap-3">
+    <div class="flex-col mt-6 py-4 border border-gray-300 w-3/12 px-4 rounded-lg shadow-xl" style="min-height: 70%;">
+        <div class="py-3 border-b border-gray-500 w-full flex justify-between">
+            <span class="text-2xl font-bold text-gray-700">Filtros</span>
+        </div>
+
+        <div class="block mt-3">
+            <label for="sales_select">Produto: <br></label>
+            <select class="block w-full h-10 border border-gray-600 bg-white rounded-lg px-2" name="product_select"
+                [(ngModel)]="filters.product_id" (ngModelChange)="refreshTable()">
+                <ng-container *ngFor="let product of products">
+                    <option class="h-8 px-2" [value]="product.id">
+                        {{ product.code }} - {{ product.description }}
+                    </option>
+                </ng-container>
+            </select>
+        </div>
+
+        <div class="block mt-3">
+            <label for="sales_select">Cliente: <br></label>
+            <select class="block w-full h-10 border border-gray-600 bg-white rounded-lg px-2" name="customer_select"
+                [(ngModel)]="filters.customer_id" (ngModelChange)="refreshTable()">
+                <ng-container *ngFor="let customer of customers">
+                    <option class="h-8 px-2" [value]="customer.id">
+                        {{ customer.name }}
+                    </option>
+                </ng-container>
+            </select>
+        </div>
+
+        <div class="block">
+            <label class="mt-3" for="sale_code">Código:<br></label>
+            <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="sale_code"
+                name="sale_code" type="text" required="true" [(ngModel)]="filters.code"
+                (ngModelChange)="refreshTable()">
+        </div>
+
+        <div class="block">
+            <label class="mt-3" for="product_quantity">Quantidade:<br></label>
+            <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="product_quantity"
+                name="product_quantity" type="number" required="true" [(ngModel)]="filters.quantity"
+                (ngModelChange)="refreshTable()">
+        </div>
+
+        <div class="block">
+            <label class="mt-3" for="sale_price">Valor:<br></label>
+            <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="sale_price"
+                name="sale_price" type="number" required="true" [(ngModel)]="filters.price"
+                (ngModelChange)="refreshTable()">
+        </div>
+
+        <button class="mt-3 px-4 h-8 rounded-lg bg-red-500 hover:bg-green-400 text-white" (click)="clearFilters()">
+            Limpar Filtros
+        </button>
+    </div>
+
     <div class="flex-col mt-6 py-4 border border-gray-300 w-7/12 px-4 rounded-lg shadow-xl" style="min-height: 70%;">
         <div class="py-3 border-b border-gray-500 w-full flex justify-between">
             <span class="text-2xl font-bold text-gray-700">Listagem de Vendas</span>
 
-            <button class="px-4 h-8 rounded-xl bg-green-500 hover:bg-green-400 text-white"
-                routerLink="incluir">
+            <button class="px-4 h-8 rounded-xl bg-green-500 hover:bg-green-400 text-white" routerLink="incluir">
                 Criar Venda
             </button>
         </div>
@@ -24,17 +78,17 @@
             <tbody>
                 <ng-container *ngIf="sales?.length; else noData">
                     <tr *ngFor="let sale of sales" class="border-b rounded-xl">
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ sale.code }}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ sale.code }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ sale.price | number:'1.2-2' }}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ sale.price | number:'1.2-2' }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ sale.quantity | number:'1.0-0'}}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ sale.quantity | number:'1.0-0'}}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ sale.product.description }}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ sale.product.description }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ sale.customer.name }}</td>
+                        <td class="p-2 text-center hover:bg-gray-100">{{ sale.customer.name }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">
+                        <td class="p-2 text-center hover:bg-gray-100">
                             <div class="w-full flex justify-center gap-3">
                                 <fa-icon [icon]="penIcon" class="cursor-pointer hover:text-gray-400"
                                     [routerLink]="[sale.id, 'editar']">

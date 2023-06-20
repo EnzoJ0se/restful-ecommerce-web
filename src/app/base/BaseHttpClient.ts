@@ -27,8 +27,9 @@ export abstract class BaseHttpClient {
 
     public get(filters?: any): Promise<any> {
         const url = this.bindJsonApi();
+
         const options = {
-            params: this.buildQueryParams(filters || filters),
+            params: this.buildQueryParams(filters || this.filters),
             headers: this.requestConfig.headers
         };
 
@@ -80,15 +81,17 @@ export abstract class BaseHttpClient {
     }
 
     private buildQueryParams(filters: any): HttpParams {
-        const params = new HttpParams();
+        let params = new HttpParams();
 
         if (!filters) {
             return params;
         }
 
-        Object.keys(filters)?.forEach(
-            (key) => params.set('key', filters[key])
-        );
+        Object.keys(filters)?.forEach((key) => {
+            if (filters[key]) {
+                params = params.append(key, filters[key])
+            }
+        });
 
         return params;
     }

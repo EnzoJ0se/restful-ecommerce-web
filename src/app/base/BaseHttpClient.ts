@@ -10,6 +10,12 @@ export abstract class BaseHttpClient {
     protected jsonApi: string = '';
     protected filters: any;
 
+    protected requestConfig = {
+        headers: {
+            accept: 'application/json, text/plain, */*',
+        },
+    };
+
     public constructor(
         private httpClient: HttpClient
     ) {
@@ -21,7 +27,10 @@ export abstract class BaseHttpClient {
 
     public get(filters?: any): Promise<any> {
         const url = this.bindJsonApi();
-        const options = { params: this.buildQueryParams(filters || filters) };
+        const options = {
+            params: this.buildQueryParams(filters || filters),
+            headers: this.requestConfig.headers
+        };
 
         return firstValueFrom(
             this.httpClient.get(url, options)
@@ -32,20 +41,22 @@ export abstract class BaseHttpClient {
         const url = this.bindJsonApi();
 
         return firstValueFrom(
-            this.httpClient.get(`${url}/${id}`)
+            this.httpClient.get(`${url}/${id}`, this.requestConfig)
         );
     }
 
     public post(data: any): Promise<any> {
         const url = this.bindJsonApi();
 
-        return firstValueFrom(this.httpClient.post(url, data));
+        return firstValueFrom(
+            this.httpClient.post(url, data, this.requestConfig)
+        );
     }
 
     public put(data: any, id?: number, endpoint?: string): Promise<any> {
         let url = this.bindJsonApi();
 
-        url = endpoint ? `${this.jsonApi}/${endpoint}` : this.jsonApi;
+        url = endpoint ? `${url}/${endpoint}` : url;
 
         if (id) {
             url = `${url}/${id}`;
@@ -55,14 +66,16 @@ export abstract class BaseHttpClient {
             url = `${url}/${endpoint}`;
         }
 
-        return firstValueFrom(this.httpClient.put(url, data));
+        return firstValueFrom(
+            this.httpClient.put(url, data, this.requestConfig)
+        );
     }
 
     public delete(id: number): Promise<any> {
         const url = this.bindJsonApi();
 
         return firstValueFrom(
-            this.httpClient.delete(`${url}/${id}`)
+            this.httpClient.delete(`${url}/${id}`, this.requestConfig)
         );
     }
 

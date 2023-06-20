@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { CustomerFormComponent } from './customer-form/customer-form.component';
-import { CustomerListComponent } from './customer-list/customer-list.component';
+import { ProductFormComponent } from './product-form/product-form.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 const routes: Routes = [
-    { path: '', component: CustomerListComponent },
-    { path: 'incluir', component: CustomerFormComponent },
-    { path: ':id/editar', component: CustomerFormComponent },
+    { path: '', component: ProductListComponent },
+    { path: 'incluir', component: ProductFormComponent },
+    { path: ':id/editar', component: ProductFormComponent },
 ];
 
 @NgModule({
@@ -18,8 +18,8 @@ const routes: Routes = [
         RouterModule
     ],
     declarations: [
-        CustomerListComponent,
-        CustomerFormComponent,
+        ProductListComponent,
+        ProductFormComponent,
     ],
     imports: [
         CommonModule,
@@ -28,4 +28,4 @@ const routes: Routes = [
         FontAwesomeModule,
     ],
 })
-export class CustomerListModule { }
+export class ProductModule { }

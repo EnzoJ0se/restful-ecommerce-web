@@ -1,0 +1,51 @@
+<form #form="ngForm">
+    <div class="w-full h-full flex justify-center items-center">
+        <div class="flex-col mt-6 py-4 border border-gray-300 w-5/12 px-4 rounded-lg shadow-xl">
+            <div class="py-3 border-b mb-3 border-gray-500 w-full flex justify-between">
+                <span class="text-2xl font-bold text-gray-700">Criar/Editar Venda</span>
+            </div>
+
+            <div class="block">
+                <label class="mt-3" for="sale_code">Código:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="sale_code"
+                    name="sale_code" type="text" required="true" [(ngModel)]="saleDTO.code">
+            </div>
+
+            <div class="block">
+                <label class="mt-3" for="customer_cpf">CPF do Cliente:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="customer_cpf"
+                    name="customer_cpf" type="text" required="true" [(ngModel)]="saleDTO.customer_cpf">
+            </div>
+
+            <div class="block">
+                <label class="mt-3" for="product_code">Código do Produto:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="product_code"
+                    name="product_code" type="text" required="true" [(ngModel)]="saleDTO.product_code">
+            </div>
+
+            <div class="block">
+                <label class="mt-3" for="product_quantity">Quantidade:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="product_quantity"
+                    name="product_quantity" type="number" required="true" [(ngModel)]="saleDTO.quantity">
+            </div>
+
+            <div class="block">
+                <label class="mt-3" for="sale_price">Valor:<br></label>
+                <input class="px-2 w-full border rounded-lg h-10 border-gray-600 bg-white mb-3" id="sale_price"
+                    name="sale_price" type="number" required="true" [(ngModel)]="saleDTO.price">
+            </div>
+
+            <div class="w-full flex gap-3 px-2 mt-3">
+                <button class="px-6 h-8 rounded-xl bg-green-500 hover:bg-green-400 text-white"
+                    (click)="save()">
+                    Salvar
+                </button>
+
+                <a class="cursor-auto text-gray-700 hover:underline" href="javascript:;"
+                    routerLink="/sale">
+                    voltar a listagem
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

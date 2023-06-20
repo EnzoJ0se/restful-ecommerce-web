@@ -1,44 +1,44 @@
 <div class="w-full h-full flex justify-center items-center">
     <div class="flex-col mt-6 py-4 border border-gray-300 w-7/12 px-4 rounded-lg shadow-xl" style="min-height: 70%;">
         <div class="py-3 border-b border-gray-500 w-full flex justify-between">
-            <span class="text-2xl font-bold text-gray-700">Listagem de Clientes</span>
+            <span class="text-2xl font-bold text-gray-700">Listagem de Produtos</span>
 
             <button class="px-4 h-8 rounded-xl bg-green-500 hover:bg-green-400 text-white"
                 routerLink="incluir">
-                Criar cliente
+                Criar Produto
             </button>
         </div>
 
         <table class="table w-full mt-6">
             <thead class="bg-gray-200">
                 <tr>
-                    <th class="px-2 py-4 uppercase rounded-l-xl">Nome</th>
-                    <th class="px-2 py-4 uppercase">CPF</th>
-                    <th class="px-2 py-4 uppercase">Telefone</th>
-                    <th class="px-2 py-4 uppercase">Endereço</th>
+                    <th class="px-2 py-4 uppercase rounded-l-xl">Código</th>
+                    <th class="px-2 py-4 uppercase">Descrição</th>
+                    <th class="px-2 py-4 uppercase">Preço</th>
+                    <th class="px-2 py-4 uppercase">QTD em Estoque</th>
                     <th class="px-2 py-4 uppercase rounded-r-xl">Ações</th>
                 </tr>
             </thead>
 
             <tbody>
-                <ng-container *ngIf="customers?.length; else noData">
-                    <tr *ngFor="let customer of customers" class="border-b rounded-xl">
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ customer.name }}</td>
+                <ng-container *ngIf="products?.length; else noData">
+                    <tr *ngFor="let product of products" class="border-b rounded-xl">
+                        <td  class="p-2 text-center hover:bg-gray-100">{{ product.code }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ customer.cpf }}</td>
+                        <td  class="p-2 text-center hover:bg-gray-100">{{ product.description }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ customer.phone }}</td>
+                        <td  class="p-2 text-center hover:bg-gray-100">{{ product.price }}</td>
 
-                        <td  class="p-2 text-center hover:bg-gray-100">{{ customer.address }}</td>
+                        <td  class="p-2 text-center hover:bg-gray-100">{{ product.stock_quantity }}</td>
 
                         <td  class="p-2 text-center hover:bg-gray-100">
                             <div class="w-full flex justify-center gap-3">
                                 <fa-icon [icon]="penIcon" class="cursor-pointer hover:text-gray-400"
-                                    [routerLink]="[customer.id, 'editar']">
+                                    [routerLink]="[product.id, 'editar']">
                                 </fa-icon>
 
                                 <fa-icon [icon]="trashIcon" class="cursor-pointer hover:text-red-500"
-                                    (click)="delete(customer)">
+                                    (click)="delete(product)">
                                 </fa-icon>
                             </div>
                         </td>
